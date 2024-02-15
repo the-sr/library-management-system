@@ -11,7 +11,7 @@ app.use(routes);
 
 app.use((error, req, res, next) => {
     let status = error.status ?? error;
-    let msg = error.msg ?? err;
+    let msg = error.msg ?? error;
     res.status(status).json({
         result: null,
         status: false,

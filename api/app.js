@@ -1,9 +1,8 @@
 const express = require("express");
 const app = express();
+const routes = require("./routes/index");
 
-app.use("/", (req, res, next) => {
-    console.log("Here..");
-})
+app.use(routes);
 
 app.listen(3005, "localhost", (err) => {
     if (!err) {

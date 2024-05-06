@@ -1,9 +1,11 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const UserServices = require("../services/user.services");
+const Config = require("../../config/config");
 const user_services = new UserServices();
 class AuthController {
 
-    registerUser = (req, res, next) => {
+    registerUser = async (req, res, next) => {
         try {
             let data = req.body;
             if (req.file) {
@@ -12,8 +14,7 @@ class AuthController {
             //For multiple files => if (req.files) {data.image = req.files.map((file) => file.filename);}
             user_services.validateData(data);
             data.password = bcrypt.hashSync(data.password, 10);
-            user_services.createUser(data);
-            //Mail to confirm
+            await user_services.createUser(data);
             res.json({
                 result: data,
                 status: true,
@@ -29,7 +30,7 @@ class AuthController {
             let loggedInUser = await user_services.getUserByEmail(data);
             if (loggedInUser) {
                 if (bcrypt.compareSync(data.password, loggedInUser.password)) {
-                    let token = jwt.sign({ user_id: loggedInUser._id }, "secret123");
+                    let token = jwt.sign({ user_id: loggedInUser._id }, Config.JWT_SECRET);
                     res.json({
                         result: {
                             user: loggedInUser,
@@ -44,8 +45,16 @@ class AuthController {
             throw next({ status: 401, msg: e });
         }
     }
-    profile = (req, res, next) => {
-
+    logout = (req, res, next) => {
+        //
+        //
+    }
+    getLoggedInUser = (req, res, next) => {
+        res.json({
+            result: req.auth_user,
+            status: true,
+            msg: "Your Profile"
+        });
     }
 }
 

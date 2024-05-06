@@ -14,11 +14,15 @@ const UserSchemaDef = new mongoose.Schema({
         type: String,
         required: true
     },
+    phone: {
+        type: String,
+        required: true
+    },
     address: String,
     role: {
         type: String,
-        enum: ['admin', 'librarian', 'user'],
-        default: "user"
+        enum: ['admin', 'seller', 'buyer'],
+        default: "buyer"
     },
     status: commonSchema.status,
     image: String,

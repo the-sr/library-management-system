@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 const { DB } = require("./config");
 
-let dbURL = DB.PROTOCOL + "://" + DB.HOST + ":" + DB.PORT + "/" + DB.NAME;
+let db_url = DB.PROTOCOL + "://" + DB.HOST + ":" + DB.PORT + "/" + DB.NAME;
 
-
-mongoose.connect(dbURL, {
+mongoose.connect(db_url, {
     autoCreate: true,
     autoIndex: true
 }).then(() => {

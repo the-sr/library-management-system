@@ -1,3 +1,8 @@
+const jwt = require("jsonwebtoken");
+const Config = require("../../config/config");
+const UserServices = require("../services/user.services");
+const user_services = new UserServices();
+
 const auth = (req, res, next) => {
     try {
         let token = null;
@@ -15,10 +20,15 @@ const auth = (req, res, next) => {
             if (token === null) {
                 next({ status: 401, msg: "Token not provided" });
             } else {
-                let data = jwt.verify(token, "secret123");
-                //fetch user data from DB
-                //re.auth_user= DATA FROM DB
+                let data = jwt.verify(token, Config.JWT_SECRET);
 
+                let auth_user = user_services.getUserById(data.user_id);
+                if (auth_user) {
+                    req.auth_user = auth_user;
+                    next();
+                } else {
+                    next({ status: 401, msg: "Token Invalid" });
+                }
             }
         }
     } catch (e) {

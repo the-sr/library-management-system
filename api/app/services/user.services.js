@@ -9,9 +9,9 @@ class UserServices {
                 name: joi.string().required(),
                 email: joi.string().email().required(),
                 password: joi.string().min(8).max(15).required(),
-                phone: joi.string().min(10).max(10).required(),
                 address: joi.string(),
-                role: joi.string().default('buyer'),
+                role: joi.string().default('user'),
+                preferredGenres: joi.array().default([]),
                 status: joi.string().default('inactive'),
                 image: joi.string().empty()
             });
@@ -48,7 +48,7 @@ class UserServices {
             throw e;
         }
     }
-    getUserById = async (data) => {
+    getUserById = async (id) => {
         try {
             let user = await UserModel.findById(id);
             return user;

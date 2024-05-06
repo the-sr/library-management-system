@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+
 require("./config/mongoose.config");
 const routes = require("./routes/index");
 
@@ -22,7 +23,7 @@ app.use((error, req, res, next) => {
 
 app.listen(3005, "localhost", (err) => {
     if (!err) {
-        console.log("Server is listening at port 3005.....");
+        console.log("Server is listening to port 3005.....");
         console.log("Press Ctrl + C to close...");
     }
 });

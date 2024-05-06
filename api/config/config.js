@@ -5,7 +5,7 @@ const Config = {
         PORT: 27017,
         USER: "",
         PWD: "",
-        NAME: "pet-management"
+        NAME: "library"
     },
     JWT_SECRET: "secret123"
 }

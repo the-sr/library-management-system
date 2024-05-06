@@ -8,10 +8,16 @@ class BookServices {
             const schema = joi.object({
                 isbn: joi.string().required(),
                 title: joi.string().required(),
-                author: joi.array(),
+                author: joi.alternatives().try(
+                    joi.string(),
+                    joi.array().items(joi.string())
+                ),
                 edition: joi.string(),
                 publisher: joi.string(),
-                genre: joi.array().default([]),
+                genre: joi.alternatives().try(
+                    joi.string(),
+                    joi.array().items(joi.string())
+                ),
                 image: joi.string(),
                 bookCount: joi.number().required()
             });

@@ -36,6 +36,23 @@ class BookController {
             throw next({ status: 404, msg: e })
         }
     }
+    updateBook = (req, res, next) => {
+        let data = req.body;
+        res.json({
+            result: null,
+            status: true,
+            msg: "Book data updated successfully"
+        });
+    }
+
+    deleteBook = (req, res, next) => {
+        let data = req.body;
+        res.json({
+            result: null,
+            status: true,
+            msg: "Book deleted successfully"
+        });
+    }
 
 }
 

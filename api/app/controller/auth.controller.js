@@ -28,6 +28,7 @@ class AuthController {
     login = async (req, res, next) => {
         try {
             let data = req.body;
+            console.log(data);
             let loggedInUser = await user_services.getUserByEmail(data);
             if (loggedInUser) {
                 if (bcrypt.compareSync(data.password, loggedInUser.password)) {
@@ -51,6 +52,8 @@ class AuthController {
         //
     }
     getLoggedInUser = (req, res, next) => {
+        //user user book service to retrive information about bowwowed book
+        //and add it to the req.books
         res.json({
             result: req.auth_user,
             status: true,

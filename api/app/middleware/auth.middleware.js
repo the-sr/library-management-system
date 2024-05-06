@@ -3,7 +3,7 @@ const Config = require("../../config/config");
 const UserServices = require("../services/user.services");
 const user_services = new UserServices();
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
     try {
         let token = null;
         if (req.headers['authorization']) {
@@ -22,7 +22,7 @@ const auth = (req, res, next) => {
             } else {
                 let data = jwt.verify(token, Config.JWT_SECRET);
 
-                let auth_user = user_services.getUserById(data.user_id);
+                let auth_user = await user_services.getUserById(data.user_id);
                 if (auth_user) {
                     req.auth_user = auth_user;
                     next();

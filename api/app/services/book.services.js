@@ -63,6 +63,17 @@ class BookServices {
             throw e;
         }
     }
+
+    deleteBookById = async (id) => {
+        return await BookModel.deleteOne(id);
+    }
+
+    updateBook = async (id, data) => {
+        let status = await BookModel.findByIdAndUpdate(id, {
+            $set: data
+        })
+        return status;
+    }
 }
 
 module.exports = BookServices;

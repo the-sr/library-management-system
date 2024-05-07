@@ -12,7 +12,7 @@ auth_routes.post("/login", uploader.none(), auth_controller.login);
 
 auth_routes.get("/logout", auth, auth_controller.logout);
 
-auth_routes.get("/me", auth, auth_controller.getLoggedInUser);
+auth_routes.get("/profile", auth, auth_controller.getLoggedInUser);
 
 auth_routes.put("/me");
 

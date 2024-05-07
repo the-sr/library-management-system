@@ -28,11 +28,7 @@ const UserSchemaDef = new mongoose.Schema({
         type: String
     }],
 
-    status: commonSchema.status,
-
     image: String,
-
-    created_by: commonSchema.created_by
 
 }, commonSchema.trigger);
 const UserModel = mongoose.model("User", UserSchemaDef);

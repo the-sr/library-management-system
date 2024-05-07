@@ -39,10 +39,6 @@ const BookSchemaDef = mongoose.Schema({
         required: true
     },
 
-    status: commonSchema.status,
-
-    created_by: commonSchema.created_by
-
 }, commonSchema.trigger);
 const BookModel = mongoose.model("Book", BookSchemaDef);
 module.exports = BookModel;

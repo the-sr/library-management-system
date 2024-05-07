@@ -11,8 +11,10 @@ class UserServices {
                 password: joi.string().min(8).max(15).required(),
                 address: joi.string(),
                 role: joi.string().default('user'),
-                preferredGenres: joi.array().default([]),
-                status: joi.string().default('inactive'),
+                preferredGenres: joi.alternatives().try(
+                    joi.string(),
+                    joi.array().items(joi.string())
+                ),
                 image: joi.string().empty()
             });
             let result = schema.validate(data);

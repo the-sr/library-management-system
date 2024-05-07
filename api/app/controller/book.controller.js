@@ -36,22 +36,40 @@ class BookController {
             throw next({ status: 404, msg: e })
         }
     }
-    updateBook = (req, res, next) => {
-        let data = req.body;
-        res.json({
-            result: null,
-            status: true,
-            msg: "Book data updated successfully"
-        });
+    updateBook = async (req, res, next) => {
+        try {
+            let data = req.body;
+            if (req.file) {
+                data.image = req.file.filename;
+            }
+            book_services.validateData(data);
+            let response = await book_services.updateBook(req.param.id, data);
+            res.json({
+                result: response,
+                status: true,
+                msg: "Book data updated successfully"
+            });
+        } catch (e) {
+            next({ status: 400, msg: e });
+        }
     }
 
-    deleteBook = (req, res, next) => {
-        let data = req.body;
-        res.json({
-            result: null,
-            status: true,
-            msg: "Book deleted successfully"
-        });
+    deleteBook = async (req, res, next) => {
+        try {
+            let data = await book_services.deleteBookById(req.param.id);
+            if (data.deletedCount) {
+                res.json({
+                    result: data,
+                    status: true,
+                    msg: "Book deleted successfully"
+                });
+            } else {
+                next({ status: 404, msg: "Book does not exists" });
+            }
+        } catch (e) {
+            next({ status: 400, msg: e });
+        }
+
     }
 
 }

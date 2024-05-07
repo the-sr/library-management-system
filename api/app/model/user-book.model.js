@@ -17,9 +17,6 @@ const UserBookSchemaDef = new mongoose.Schema({
         required: true
     },
 
-    status: commonSchema.status,
-
-    created_by: commonSchema.created_by
 }, commonSchema.trigger);
 const UserBookModel = mongoose.model("UserBook", UserBookSchemaDef);
 module.exports = UserBookModel;

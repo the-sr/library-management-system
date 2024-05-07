@@ -1,8 +1,10 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const UserServices = require("../services/user.services");
+const UserBookService = require("../services/user-book.service");
 const Config = require("../../config/config");
 const user_services = new UserServices();
+const user_book_service = new UserBookService();
 class AuthController {
 
     registerUser = async (req, res, next) => {
@@ -28,7 +30,6 @@ class AuthController {
     login = async (req, res, next) => {
         try {
             let data = req.body;
-            console.log(data);
             let loggedInUser = await user_services.getUserByEmail(data);
             if (loggedInUser) {
                 if (bcrypt.compareSync(data.password, loggedInUser.password)) {
@@ -51,14 +52,22 @@ class AuthController {
         //
         //
     }
-    getLoggedInUser = (req, res, next) => {
-        //user user book service to retrive information about bowwowed book
-        //and add it to the req.books
-        res.json({
-            result: req.auth_user,
-            status: true,
-            msg: "Your Profile"
-        });
+    getLoggedInUser = async (req, res, next) => {
+        try {
+            let user_id = req.auth_user._id;
+            let borrowed_books = await user_book_service.getUserBookByUserId(user_id);
+            res.json({
+                result: {
+                    user_details: req.auth_user,
+                    borrowed_books: borrowed_books
+                },
+                status: true,
+                msg: "Your Profile"
+            });
+        } catch (e) {
+            next({ status: 400, msg: e })
+        }
+
     }
 }
 

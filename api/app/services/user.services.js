@@ -58,6 +58,15 @@ class UserServices {
             throw e;
         }
     }
+    updateUser = async (id, data) => {
+        try {
+            let user = await UserModel.findByIdAndUpdate(id, {
+                $set: data
+            });
+        } catch (e) {
+            throw e;
+        }
+    }
 
 }
 

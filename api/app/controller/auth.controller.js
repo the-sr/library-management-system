@@ -69,6 +69,20 @@ class AuthController {
         }
 
     }
+    updateUser = async (req, res, next) => {
+        try {
+            let user_id = req.auth_user._id;
+            let data = req.body;
+            let user_obj = await user_services.updateUser(user_id, data);
+            res.json({
+                result: user_obj,
+                status: true,
+                msg: "User Updated Successfully"
+            })
+        } catch (e) {
+            next({ status: 400, msg: e });
+        }
+    }
 }
 
 module.exports = AuthController;

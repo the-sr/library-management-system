@@ -36,7 +36,8 @@ const BookSchemaDef = mongoose.Schema({
 
     bookCount: {
         type: Number,
-        required: true
+        required: true,
+        min: 1
     },
 
 }, commonSchema.trigger);

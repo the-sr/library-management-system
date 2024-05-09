@@ -20,10 +20,10 @@ class UserBookController {
                 let user_book = {
                     user: user_id,
                     book: book._id,
-                    borrowedDate: new Date()
                 };
-                console.log(user_book);
+
                 let response = await user_book_service.addUserBook(user_book);
+                console.log(response);
                 book.bookCount = book.bookCount - 1;
                 console.log(book);
                 await book_service.updateBook(book._id, book)

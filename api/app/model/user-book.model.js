@@ -14,8 +14,17 @@ const UserBookSchemaDef = new mongoose.Schema({
 
     borrowedDate: {
         type: Date,
-        required: true
+        default: Date.now()
     },
+
+    returnDate: {
+        type: Date,
+        default: () => {
+            const returnDate = new date(this.borrowedDate);
+            returnDate.setMonth(returnDate.getMonth() + 6);
+            return returnDate;
+        }
+    }
 
 }, commonSchema.trigger);
 const UserBookModel = mongoose.model("UserBook", UserBookSchemaDef);

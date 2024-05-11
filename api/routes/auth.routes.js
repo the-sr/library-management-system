@@ -14,7 +14,7 @@ auth_routes.get("/logout", auth, auth_controller.logout);
 
 auth_routes.get("/profile", auth, auth_controller.getLoggedInUser);
 
-auth_routes.put("/me");
+//auth_routes.put("/me", auth, auth_controller);
 
 auth_routes.delete("/me");
 

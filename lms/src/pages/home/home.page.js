@@ -1,5 +1,18 @@
+import { useEffect, useState } from "react";
+import { HeaderComponent } from "../../components/home/home.component";
+
 const HomePage = () => {
-    return ("Home Page")
+
+    let [banner, setBanner] = useState();
+    let [loading, setLoading] = useState(false);
+
+    useEffect(() => { })
+
+    return (
+        <>
+            <HeaderComponent />
+        </>
+    )
 }
 
 export default HomePage;

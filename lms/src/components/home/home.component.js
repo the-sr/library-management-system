@@ -5,7 +5,6 @@ export const HeaderComponent = () => {
     return (<>
         <Navbar bg="dark" data-bs-theme="dark">
             <Container>
-                <Navbar.Brand href="#home">Library</Navbar.Brand>
                 <Nav className="me-auto">
                     <NavLink className={"nav-link"} to="/">Home</NavLink>
                     <NavLink className={"nav-link"} to="/">About</NavLink>
@@ -20,4 +19,10 @@ export const HeaderComponent = () => {
             </Container>
         </Navbar>
     </>)
-} 
+}
+
+export const FooterComponent = () => {
+    return (
+        <>Footer</>
+    )
+}

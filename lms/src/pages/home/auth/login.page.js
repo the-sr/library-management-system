@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { HeaderComponent } from "../../../components/home/home.component";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -8,13 +8,13 @@ const LoginPage = () => {
         emial: null,
         password: null
     });
+    let navigate = useNavigate();
     const handleChange = (e) => {
         setData({
             ...data,
             [e.target.name]: e.target.value
         })
     }
-    let navigate = useNavigate()
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Data: ", data)
@@ -25,20 +25,33 @@ const LoginPage = () => {
                 token: "jwttoken"
             }
         };
-        localStorage.setItem("library_system", JSON.stringify(user_detail));
+        localStorage.setItem("library_system", JSON.stringify(user_detail.result.user));
+        localStorage.setItem("library_system_token", user_detail.result.token);
         localStorage.getItem("library_system");
         localStorage.removeItem("library_system");
         //localhoststorage,cookie
         //if success ==> dashboard/admin/librarian/seller
         navigate("/" + user_detail.result.user.role);
     }
+    useEffect(() => {
+        let token = localStorage.getItem("library_system");
+        let user = JSON.parse(localStorage.getItem("library_system"))
+        if (token) {
+            navigate("/" + user.role)
+        }
+    }, [])
+
     return (<>
         <div>
-            <HeaderComponent />
             <Container>
                 <Row>
                     <Col>
-                        <h1 className="text-center">LoginPage</h1>
+                        <h1 className="text-center">Sign In</h1>
+                    </Col>
+                </Row>
+                <hr />
+                <Row>
+                    <Col>
                         <Form onSubmit={handleSubmit}>
                             <Form.Group className="mb-3" controlId="formGroupEmail">
                                 <Form.Label>Email address</Form.Label>
@@ -54,7 +67,7 @@ const LoginPage = () => {
                                 </Button>
                             </NavLink>
 
-                            <NavLink>
+                            <NavLink to="/login" >
                                 <Button variant="success" type="submit">
                                     Submit
                                 </Button>

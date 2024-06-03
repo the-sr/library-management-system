@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { HeaderComponent } from "../../components/home/home.component";
+
 import "../../assets/css/home.page.css";
 
 const HomePage = () => {

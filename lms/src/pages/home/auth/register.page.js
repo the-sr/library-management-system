@@ -3,13 +3,12 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 const RegisterPage = () => {
-
     let defaultValue = {
         name: "",
         email: "",
         password: "",
         address: "",
-        role: "",
+        preferredGenres: [],
         image: null
     };
 
@@ -18,9 +17,9 @@ const RegisterPage = () => {
         email: yup.string().required().email(),
         password: yup.string().required().min(8),
         address: yup.string().nullable(),
-        role: yup.string().required(),
+        preferredGenres: yup.array().nullable(),
         image: yup.mixed().nullable()
-    })
+    });
 
     let formik = useFormik(
         {
@@ -30,9 +29,9 @@ const RegisterPage = () => {
                 console.log("submit:", values)
             }
         }
-    )
+    );
 
-    return (<>
+    return (
         <div>
             <Container>
                 <Row>
@@ -73,14 +72,32 @@ const RegisterPage = () => {
                                 </Col>
                             </Form.Group>
                             <Form.Group className="row mb-3">
-                                <Form.Label className="col sm-3">Role: </Form.Label>
+                                <Form.Label className="col sm-3">Preferred Genres: </Form.Label>
                                 <Col sm={9}>
-                                    <Form.Select name="role" required onChange={formik.handleChange} size="sm">
-                                        <option>--Select Any One--</option>
-                                        <option value="user">User</option>
-                                        <option value="librarian">Librarian</option>
-                                    </Form.Select>
-                                    <span className="text-danger">{formik.errors?.role}</span>
+                                    <div className="genre-checkboxes">
+                                        <Form.Check
+                                            inline
+                                            label="Fiction"
+                                            type="checkbox"
+                                            id="fiction"
+                                            name="preferredGenres"
+                                            value="Fiction"
+                                            onChange={formik.handleChange}
+                                            checked={formik.values.preferredGenres.includes("Fiction")}
+                                        />
+                                        <Form.Check
+                                            inline
+                                            label="Non-Fiction"
+                                            type="checkbox"
+                                            id="nonFiction"
+                                            name="preferredGenres"
+                                            value="Non-Fiction"
+                                            onChange={formik.handleChange}
+                                            checked={formik.values.preferredGenres.includes("Non-Fiction")}
+                                        />
+                                        {/* Add more genre checkboxes as needed */}
+                                    </div>
+                                    <span className="text-danger">{formik.errors?.preferredGenres}</span>
                                 </Col>
                             </Form.Group>
                             <Form.Group className="row mb-3">
@@ -116,10 +133,10 @@ const RegisterPage = () => {
                             <Form.Group className="row mb-3">
                                 <Col sm={{ offset: 3, span: 9 }}>
                                     <Button variant="danger" className="me-3" type="reset" >
-                                        <i className="fa fa-trash"></i>Cancel
+                                        <i className="fa fa-trash me-3"></i>Cancel
                                     </Button>
                                     <Button variant="success" type="submit" >
-                                        <i className="fa fa-paper-plane"></i>Submit
+                                        <i className="fa fa-paper-plane me-3"></i>Submit
                                     </Button>
                                 </Col>
                             </Form.Group>
@@ -127,10 +144,9 @@ const RegisterPage = () => {
                     </Col>
                 </Row>
             </Container>
-
         </div>
-
-    </>)
+    )
 }
 
 export default RegisterPage;
+

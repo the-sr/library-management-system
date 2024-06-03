@@ -9,6 +9,8 @@ import { AdminAccessCntrol } from "./components/access-control/access-control.co
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import HomePageLayout from "./pages/layouts/homepage.layout";
+import UserLayout from "./pages/layouts/user.layout";
+import LibrarianLayout from "./pages/layouts/librarian.layout";
 const Routing = () => {
     return (<>
         <ToastContainer />
@@ -22,19 +24,23 @@ const Routing = () => {
                 </Route>
 
 
-                <Route path="/admin" element={<AdminAccessCntrol Component={<AdminLayout />} />}>
-                    <Route index element={<>Admin Dashboard</>} />
-                    <Route path="user" element={<>List all users</>} />
-                    <Route path="user/:id/edit" element={<>Edit User</>} />
+                <Route path="/admin" element={<AdminAccessCntrol accessTo={"admin"} Component={<AdminLayout />} />}>
+                    {/* <Route index element={<>Admin Dashboard</>} />
+                    <Route path="users" element={<>List all users</>} />
+                    <Route path="user/:id/edit" element={<>Edit User</>} /> */}
                 </Route>
 
-                <Route path="/user" element={<>UserLayout</>}>
-                    <Route index element={<>User DashBoard</>} />
+                <Route path="/user" element={<AdminAccessCntrol accessTo={"user"} Component={<UserLayout />} />}>
+                    {/* <Route index element={<>User DashBoard</>} />
                     <Route path="books" element={<>User's Borrowed Books</>} />
-                    <Route path="edit" element={<>Edit User</>} />
+                    <Route path="edit" element={<>Edit User</>} /> */}
                 </Route>
 
-
+                <Route path="/librarian" element={<AdminAccessCntrol accessTo={"librarian"} Component={<LibrarianLayout />} />}>
+                    {/* <Route index element={<>User DashBoard</>} />
+                    <Route path="books" element={<>User's Borrowed Books</>} />
+                    <Route path="edit" element={<>Edit User</>} /> */}
+                </Route>
 
                 <Route path="*" element={<ErrorPage />} />
             </Routes>

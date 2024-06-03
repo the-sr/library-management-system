@@ -10,12 +10,12 @@ class AuthController {
     registerUser = async (req, res, next) => {
         try {
             let data = req.body;
-            console.log(data);
             if (req.file) {
                 data.image = req.file.filename;
             }
-            //For multiple files => if (req.files) {data.image = req.files.map((file) => file.filename);}
+            //For multiple files =>if (req.files) {data.image = req.files.map((file) => file.filename);}
             user_services.validateData(data);
+            console.log(data);
             data.password = bcrypt.hashSync(data.password, 10);
             await user_services.createUser(data);
             res.json({
@@ -42,15 +42,21 @@ class AuthController {
                         status: true,
                         msg: "Logged in successfully"
                     })
+                } else {
+                    next({ status: 400, msg: { password: "Password does not match" } });
                 }
+            } else {
+                next({ status: 400, msg: { email: "Email doesn't match" } })
             }
         } catch (e) {
-            throw next({ status: 401, msg: e });
+            throw next({ status: 422, msg: e });
         }
     }
     logout = (req, res, next) => {
-        //
-        //
+        res.json({
+            status: true,
+            msg: "Logged out successfully"
+        });
     }
     getLoggedInUser = async (req, res, next) => {
         try {
@@ -62,7 +68,7 @@ class AuthController {
                     borrowed_books: borrowed_books
                 },
                 status: true,
-                msg: "Your Profile"
+                msg: "User Profile"
             });
         } catch (e) {
             next({ status: 400, msg: e })
@@ -83,6 +89,45 @@ class AuthController {
             next({ status: 400, msg: e });
         }
     }
+    deleteUser = async (req, res, next) => {
+        try {
+            let user_id = req.auth_user._id;
+            await user_services.deleteUser(user_id);
+            res.json({
+                result: user_id,
+                status: true,
+                msg: "User delete successfully"
+            })
+        } catch (e) {
+            next({ status: 400, msg: e });
+        }
+    }
+    getAllUsers = async (req, res, next) => {
+        try {
+            let users = await user_services.getAllUsers();
+            res.json({
+                result: users,
+                status: true,
+                msg: "All Users"
+            })
+        } catch (e) {
+            next({ status: 400, msg: e });
+        }
+    }
+    getById = async (req, res, next) => {
+        try {
+            let user_id = req.params.id;
+            let user = await user_services.getUserById(user_id);
+            res.json({
+                result: user,
+                status: true,
+                msg: "User Details"
+            })
+        } catch (e) {
+            next({ status: 404, msg: "User Not Found" });
+        }
+    }
+
 }
 
 module.exports = AuthController;

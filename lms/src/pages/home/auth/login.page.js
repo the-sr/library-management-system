@@ -2,12 +2,18 @@ import { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { auth_service } from "../../../services/auth.service";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
     let [data, setData] = useState({
         email: null,
         password: null
     });
+
+    let [errData, setErrData] = useState({
+        email: null,
+        pasword: null
+    })
     let navigate = useNavigate();
     const handleChange = (e) => {
         setData({
@@ -18,11 +24,19 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            console.log(data);
             let user = await auth_service.login(data);
+            toast.success("Welcome");
             navigate("/" + user.role);
         } catch (e) {
-            console.log("Axios Error ", e);
+            if (e?.response?.status === 400) {
+                if (e?.response?.data?.msg) {
+                    setErrData({
+                        ...e.response.data.msg
+                    })
+                }
+            } else {
+                toast.warning(e.response.data.msg);
+            }
         }
     }
     useEffect(() => {
@@ -49,11 +63,13 @@ const LoginPage = () => {
                             <Form.Group className="mb-3" controlId="formGroupEmail">
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control onChange={handleChange} name="email" type="email" placeholder="Enter email" />
+                                <span className="text-danger">{errData?.email}</span>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formGroupPassword">
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control onChange={handleChange} name="password" type="password" placeholder="Password" />
+                                <span className="text-danger">{errData?.password}</span>
                             </Form.Group>
 
                             <Button variant="danger me-3" type="reset">

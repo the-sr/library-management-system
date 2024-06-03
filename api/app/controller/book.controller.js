@@ -20,7 +20,6 @@ class BookController {
             next({ status: 400, msg: e });
         }
     }
-
     getBook = async (req, res, next) => {
         try {
             let data = req.body;
@@ -72,6 +71,23 @@ class BookController {
 
     }
 
+    searchBook = async (req, res, next) => {
+        try {
+            let query = req.query['book-name']; // Use 'book-name' instead of 'name'
+            let books = await book_services.searchBooksByName(query);
+            if (books.length > 0) {
+                res.json({
+                    result: books,
+                    status: true,
+                    msg: "Books Fetched Successfully"
+                });
+            } else {
+                next({ status: 404, msg: "No books found matching the query" });
+            }
+        } catch (e) {
+            next({ status: 400, msg: e.message });
+        }
+    }
 }
 
 module.exports = BookController;

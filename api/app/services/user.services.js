@@ -5,21 +5,22 @@ class UserServices {
 
     validateData = (data) => {
         try {
+
             const schema = joi.object({
                 name: joi.string().required(),
                 email: joi.string().email().required(),
                 password: joi.string().min(8).max(15).required(),
-                address: joi.string(),
-                role: joi.string().default('user'),
+                phone: joi.string().min(10),
+                role: joi.string().valid('admin', 'librarian', 'user').default('user'),
                 preferredGenres: joi.alternatives().try(
                     joi.string(),
                     joi.array().items(joi.string())
                 ),
-                image: joi.string().empty()
+                image: joi.string().allow(null, '')
             });
-            let result = schema.validate(data);
-            if (result.error) {
-                throw result.error.details[0].message;
+            const { error, value } = schema.validate(data);
+            if (error) {
+                throw new Error(error.details[0].message)
             }
         } catch (e) {
             throw e;
@@ -67,7 +68,20 @@ class UserServices {
             throw e;
         }
     }
-
+    deleteUser = async (id) => {
+        try {
+            return await UserModel.deleteOne(id);
+        } catch (e) {
+            throw e;
+        }
+    }
+    getAllUsers = async () => {
+        try {
+            return await UserModel.find();
+        } catch (e) {
+            throw e;
+        }
+    }
 }
 
 module.exports = UserServices;

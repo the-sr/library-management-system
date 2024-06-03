@@ -15,8 +15,8 @@ axiosInstance.interceptors.response.use((response) => {
         localStorage.removeItem("library_system_token");
         localStorage.removeItem("library_system");
         window.location.href = "/login";
-    } else if (error.response.status === 404 || error.response.status === 404) {
-        toast.error(error.response.data);
+    } else if (error.response.status === 404 || error.response.status === 403) {
+        toast.error(error.response.data.msg);
     } else {
         throw error;
     }

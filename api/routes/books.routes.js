@@ -15,4 +15,6 @@ books_routes.put("/book/:id", auth, role.isLibrarian, uploader.single('image'), 
 
 books_routes.delete("/book/:id", auth, role.isLibrarian, book_controller.deleteBook);
 
+books_routes.get("/search", auth, (role.isLibrarian || role.isUser), book_controller.searchBook);
+
 module.exports = books_routes;

@@ -11,8 +11,12 @@ class UserBookService {
         }
     }
 
-    removeUserBook = (data) => {
-
+    removeUserBook = async (data) => {
+        try {
+            return await UserBookModel.deleteOne(data);
+        } catch (e) {
+            throw e;
+        }
     }
 
     getUserBookByUserId = async (id) => {
@@ -20,6 +24,15 @@ class UserBookService {
             let userBooks = await UserBookModel.find({
                 user: id
             }).populate('book').exec();
+            return userBooks;
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    getAllUserBooks = async () => {
+        try {
+            let userBooks = await UserBookModel.find().populate('book').exec();
             return userBooks;
         } catch (e) {
             throw e;

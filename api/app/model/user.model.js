@@ -15,15 +15,14 @@ const UserSchemaDef = new mongoose.Schema({
         type: String,
         required: true
     },
-
-    address: String,
-
+    phone: {
+        type: Number,
+    },
     role: {
         type: String,
         enum: ['admin', 'librarian', 'user'],
         default: "user"
     },
-
     preferredGenres: [{
         type: String
     }],

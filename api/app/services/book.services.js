@@ -74,6 +74,14 @@ class BookServices {
         })
         return status;
     }
+
+    searchBooksByName = async (name) => {
+        try {
+            return await BookModel.find({ title: new RegExp(name, 'i') });
+        } catch (e) {
+            throw new Error(e.message);
+        }
+    }
 }
 
 module.exports = BookServices;

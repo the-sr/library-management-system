@@ -2,8 +2,9 @@ import "../../assets/css/sidebar.css";
 import { useState } from "react";
 
 import UserProfile from "../common/user-profile.component";
-import UserList from "../common/user-list.component";
-import AddLibrarian from "../common/add-librarian.component";
+import AddLibrarian from "./add-librarian.component";
+import Settings from "../common/user-setting.component";
+import UserList from "./user-list.component";
 
 export const Sidebar = () => {
     const [activeMenu, setActiveMenu] = useState('Profile');
@@ -19,9 +20,9 @@ export const Sidebar = () => {
             case 'Librarian':
                 return <div className="content-animate"><AddLibrarian /></div>;
             case 'Setting':
-                return <div className="content-animate">Setting</div>;
+                return <div className="content-animate"><Settings/></div>;
             default:
-                return <div className="content-animate">Profile</div>;
+                return <div className="content-animate"><UserProfile/></div>;
         }
     };
 
@@ -42,7 +43,7 @@ export const Sidebar = () => {
                     <li
                         className={activeMenu === 'Users' ? 'active' : ''}
                         onClick={() => setActiveMenu('Users')}>
-                        <i class="fa-solid fa-users-line me-2" />Users
+                        <i class="fa-solid fa-users me-2" />Users
                     </li>
                     <li
                         className={activeMenu === 'Librarian' ? 'active' : ''}
@@ -62,3 +63,4 @@ export const Sidebar = () => {
         </div>
     );
 }
+

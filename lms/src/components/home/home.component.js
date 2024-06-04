@@ -1,5 +1,6 @@
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
+import UserProfile from "../common/user-profile.component";
 
 export const HeaderComponent = () => {
     let loggedUser = JSON.parse(localStorage.getItem("library_system"));
@@ -12,7 +13,7 @@ export const HeaderComponent = () => {
     }
     return (<>
         <Navbar bg="dark" data-bs-theme="dark">
-            <Container>
+            <Container style={{ position: "relative", top: "0" }}>
                 <Nav className="me-auto">
                     <NavLink className={"nav-link"} to="/">Home</NavLink>
                     <NavLink className={"nav-link"} to="/">About</NavLink>
@@ -37,7 +38,7 @@ export const HeaderComponent = () => {
 
 export const FooterComponent = () => {
     return (
-        <Navbar bg="dark" variant="dark" fixed="bottom">
+        <Navbar bg="dark" variant="dark" fixed="bottom" style={{ height: "20px" }}>
             <Container className="justify-content-center">
                 <Nav>
                     <Nav.Link

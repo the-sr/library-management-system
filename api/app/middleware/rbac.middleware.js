@@ -23,13 +23,21 @@ const isUser = (req, res, next) => {
 }
 
 const isAdminLibrarian = (req, res, next) => {
-    if (req.auth_user.role === 'admin' || req.auth_user.role == 'librarian') {
+    if (req.auth_user.role === 'admin' || req.auth_user.role === 'librarian') {
         next()
     } else {
         next({ status: 403, msg: "Access Denied" })
     }
 }
 
+const isLibrarianUser = (req, res, next) => {
+    if (req.auth_user.role === 'librarian' || req.auth_user.role === 'user') {
+        next()
+    }else {
+        next({status:403,msg:"Access Denied"})
+    }
+}
+
 module.exports = {
-    isAdmin, isLibrarian, isUser, isAdminLibrarian
+    isAdmin, isLibrarian, isUser, isAdminLibrarian,isLibrarianUser
 }

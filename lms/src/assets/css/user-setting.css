@@ -1,0 +1,83 @@
+.settings-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.settings-options {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.settings-options button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.settings-options button:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.edit-form, .change-password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.edit-form h2, .change-password-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.edit-form button, .change-password-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-form button[type="submit"], .change-password-form button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+}
+
+.edit-form button[type="submit"]:hover, .change-password-form button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+.edit-form button[type="button"], .change-password-form button[type="button"] {
+    background-color: #dc3545;
+    color: white;
+}
+
+.edit-form button[type="button"]:hover, .change-password-form button[type="button"]:hover {
+    background-color: #c82333;
+}

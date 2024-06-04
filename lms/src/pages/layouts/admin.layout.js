@@ -3,12 +3,13 @@ import { FooterComponent, HeaderComponent } from "../../components/home/home.com
 import { Outlet } from "react-router-dom";
 const AdminLayout = () => {
     return (
-        <>
-            <HeaderComponent />
+        <div >
+            <div style={{ position: "sticky", top: "0", zIndex: "9000", width: "100%" }}><HeaderComponent /></div>
             <Sidebar />
-            <Outlet />
-            <FooterComponent />
-        </>
+            <div > <Outlet />
+                <FooterComponent /></div>
+        </div>
+
     )
 }
 export default AdminLayout; 

@@ -1,0 +1,81 @@
+.book-details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    min-height: 80vh;
+  }
+  
+  .back-button {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .book-details-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .book-details-photo {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .book-details-info p,
+  .book-details-info input {
+    margin: 10px 0;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .edit-button,
+  .save-button,
+  .delete-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .edit-button:hover,
+  .save-button:hover,
+  .delete-button:hover {
+    background-color: darken(color(#28a745), 10%); /* Darken green button color on hover */
+  }
+  
+  .edit-button {
+    background-color: #28a745; /* Green button */
+  }
+  
+  .save-button {
+    background-color: #17a2b8; /* Blue button */
+  }
+  
+  .delete-button {
+    background-color: #dc3545; /* Red button */
+  }
+  

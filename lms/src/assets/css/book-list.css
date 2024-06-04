@@ -1,4 +1,4 @@
-.user-list-container {
+.book-list-container {
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
@@ -34,14 +34,14 @@
     color: #fff;
 }
 
-.user-list {
+.book-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
 }
 
-.user-card {
+.book-card {
     background-color: #f8f9fa;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -53,28 +53,28 @@
     align-items: center;
 }
 
-.user-card:hover {
+.book-card:hover {
     transform: translateY(-5px);
 }
 
-.user-photo {
+.book-photo {
     max-width: 100%;
     height: auto;
     border-radius: 4px;
     margin-bottom: 15px;
 }
 
-.user-details {
+.book-details {
     font-size: 14px;
     line-height: 1.5;
     text-align: center;
 }
 
-.user-details p {
+.book-details p {
     margin: 5px 0;
 }
 
-.user-details strong {
+.book-details strong {
     color: #28a745; /* Green color for the titles */
 }
 

@@ -44,6 +44,14 @@ class BookServices {
         }
     }
 
+    getAllBooks = async (data) => {
+        try {
+            return await BookModel.find();
+        } catch (e) {
+            throw e;
+        }
+    }
+
     getBookByTitle = async (data) => {
         try {
             let book = await BookModel.findOne({

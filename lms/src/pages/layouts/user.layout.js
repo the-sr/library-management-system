@@ -4,12 +4,12 @@ import { Sidebar } from "../../components/user/user.component";
 
 const UserLayout = () => {
     return (
-        <>
-            <HeaderComponent />
+        <div >
+            <div style={{ position: "sticky", top: "0", zIndex: "9000", width: "100%" }}><HeaderComponent /></div>
             <Sidebar />
-            <Outlet />
-            <FooterComponent />
-        </>
+            <div > <Outlet />
+                <FooterComponent /></div>
+        </div>
     )
 }
 export default UserLayout; 

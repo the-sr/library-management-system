@@ -1,6 +1,6 @@
-import { auth_service } from "../../services/auth.service";
 import { useState, useEffect } from "react";
-import "../../assets/css/user-list.css"; // Ensure this file contains necessary styles
+import { auth_service } from "../../services/auth.service";
+import "../../assets/css/only-user-list.css";
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -8,6 +8,7 @@ const UserList = () => {
     const [error, setError] = useState(null);
     const [sortCriteria, setSortCriteria] = useState("name");
     const [sortOrder, setSortOrder] = useState("asc");
+    const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -15,7 +16,7 @@ const UserList = () => {
                 const result = await auth_service.getAllUsers();
                 setUsers(result);
             } catch (err) {
-                setError(err.message || "Error fetching user list ");
+                setError(err.message || "Error fetching user list");
             } finally {
                 setLoading(false);
             }
@@ -24,7 +25,8 @@ const UserList = () => {
         fetchUserDetails();
     }, []);
 
-    const handleSort = (criteria) => {
+    const handleSort = (e) => {
+        const criteria = e.target.value;
         const order = sortOrder === "asc" ? "desc" : "asc";
         setSortCriteria(criteria);
         setSortOrder(order);
@@ -38,6 +40,14 @@ const UserList = () => {
         setUsers(sortedUsers);
     };
 
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredUsers = users
+        .filter(user => user.role === "user")
+        .filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()));
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -48,21 +58,30 @@ const UserList = () => {
 
     return (
         <div className="user-list-container">
-            <div className="sort-buttons">
-                <button onClick={() => handleSort("name")}>Sort by Name</button>
-                <button onClick={() => handleSort("email")}>Sort by Email</button>
-                <button onClick={() => handleSort("phone")}>Sort by Phone</button>
-                <button onClick={() => handleSort("role")}>Sort by Role</button>
+            <div className="search-sort-container">
+                <input
+                    type="text"
+                    placeholder="Search by name"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    className="search-box"
+                />
+                <select onChange={handleSort} className="sort-select">
+                    <option value="name">Sort by Name</option>
+                    <option value="email">Sort by Email</option>
+                    <option value="phone">Sort by Phone</option>
+                    <option value="role">Sort by Role</option>
+                </select>
             </div>
             <div className="user-list">
-                {users.map(user => (
+                {filteredUsers.map(user => (
                     <div key={user._id} className="user-card">
                         <img src={user.image ? `path/to/images/${user.image}` : "default-image-path"} alt="User" className="user-photo" />
                         <div className="user-details">
-                            <p><strong>Name:</strong> {user.name}</p>
-                            <p><strong>Email:</strong> {user.email}</p>
-                            <p><strong>Phone:</strong> {user.phone}</p>
-                            <p><strong>Role:</strong> {user.role}</p>
+                            <p><strong style={{ color: 'green' }}>Name:</strong> {user.name}</p>
+                            <p><strong style={{ color: 'green' }}>Email:</strong> {user.email}</p>
+                            <p><strong style={{ color: 'green' }}>Phone:</strong> {user.phone}</p>
+                            <p><strong style={{ color: 'green' }}>Role:</strong> {user.role}</p>
                         </div>
                     </div>
                 ))}

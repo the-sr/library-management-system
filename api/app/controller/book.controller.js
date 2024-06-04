@@ -20,6 +20,18 @@ class BookController {
             next({ status: 400, msg: e });
         }
     }
+    getAllBooks = async (req, res, next) => {
+        try {
+            let books = await book_services.getAllBooks();
+            res.json({
+                result: books,
+                status: true,
+                msg: "All Books"
+            })
+        } catch (e) {
+            throw next({ status: 400, msg: e });
+        }
+    }
     getBook = async (req, res, next) => {
         try {
             let data = req.body;

@@ -19,7 +19,7 @@ auth_routes.delete("/profile", auth, auth_controller.deleteUser);
 
 auth_routes.get("/logout", auth, auth_controller.logout);
 
-auth_routes.get("/users", auth, role.isAdmin, auth_controller.getAllUsers);
+auth_routes.get("/users", auth, role.isAdminLibrarian, auth_controller.getAllUsers);
 
 auth_routes.get("/user/:id", auth, role.isLibrarian,auth_controller.getById);
 

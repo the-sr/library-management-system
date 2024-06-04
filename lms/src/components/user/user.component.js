@@ -1,6 +1,9 @@
 import "../../assets/css/sidebar.css";
 import { useState } from "react";
 import UserProfile from "../common/user-profile.component";
+import SettingsComponent from "../common/user-setting.component";
+import BookList from "./book-list.component";
+import BorrowedBookList from "./borrowed-book-list.component";
 
 export const Sidebar = () => {
     const [activeMenu, setActiveMenu] = useState('Profile');
@@ -9,16 +12,14 @@ export const Sidebar = () => {
         switch (activeMenu) {
             case 'Profile':
                 return <div className="content-animate"><UserProfile /></div>;
-            // case 'Dashboard':
-            //     return <div className="content-animate">Dashboard</div>;
             case 'Books':
-                return <div className="content-animate">Users List</div>;
-            // case 'Librarian':
-            //     return <div className="content-animate">Add Librarian</div>;
+                return <div className="content-animate"><BookList/></div>;
+            case 'BorrowedBooks':
+                return <div className="content-animate"><BorrowedBookList/></div>;
             case 'Setting':
-                return <div className="content-animate">Setting</div>;
+                return <div className="content-animate"><SettingsComponent /></div>;
             default:
-                return <div className="content-animate">Profile</div>;
+                return <div className="content-animate"><UserProfile/></div>;
         }
     };
 
@@ -31,21 +32,16 @@ export const Sidebar = () => {
                         onClick={() => setActiveMenu('Profile')}>
                         <i className="fa-regular fa-user me-2" />Profile
                     </li>
-                    {/* <li
-                        className={activeMenu === 'Dashboard' ? 'active' : ''}
-                        onClick={() => setActiveMenu('Dashboard')}>
-                        <i className="fa-solid fa-gauge me-2" />Dashboard
-                    </li> */}
                     <li
                         className={activeMenu === 'Books' ? 'active' : ''}
                         onClick={() => setActiveMenu('Books')}>
                         <i className="fa-solid fa-book me-2" />Books
                     </li>
-                    {/* <li
-                        className={activeMenu === 'Librarian' ? 'active' : ''}
-                        onClick={() => setActiveMenu('Librarian')}>
-                        <i className="fa-solid fa-user-plus me-2" />Add Librarian
-                    </li> */}
+                    <li
+                        className={activeMenu === 'BorrowedBooks' ? 'active' : ''}
+                        onClick={() => setActiveMenu('BorrowedBooks')}>
+                        <i className="fa-solid fa-book-bookmark me-2" />Borrowed Books
+                    </li>
                     <li
                         className={activeMenu === 'Setting' ? 'active' : ''}
                         onClick={() => setActiveMenu('Setting')}>

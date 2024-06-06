@@ -64,18 +64,18 @@
   .edit-button:hover,
   .save-button:hover,
   .delete-button:hover {
-    background-color: darken(color(#28a745), 10%); /* Darken green button color on hover */
+    background-color: darken(color(#28a745), 10%); 
   }
   
   .edit-button {
-    background-color: #28a745; /* Green button */
+    background-color: #28a745; 
   }
   
   .save-button {
-    background-color: #17a2b8; /* Blue button */
+    background-color: #17a2b8; 
   }
   
   .delete-button {
-    background-color: #dc3545; /* Red button */
+    background-color: #dc3545; 
   }
   

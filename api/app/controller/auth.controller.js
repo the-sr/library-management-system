@@ -13,11 +13,14 @@ class AuthController {
             if (req.file) {
                 data.image = req.file.filename;
             }
-            //For multiple files =>if (req.files) {data.image = req.files.map((file) => file.filename);}
+            if (Array.isArray(data.preferredGenres)) {
+                data.preferredGenres = data.preferredGenres.join(", ");
+            }
             user_services.validateData(data);
             console.log(data);
             data.password = bcrypt.hashSync(data.password, 10);
             await user_services.createUser(data);
+            console.log("User Created");
             res.json({
                 result: data,
                 status: true,
@@ -27,6 +30,7 @@ class AuthController {
             next({ status: 400, msg: e });
         }
     }
+    
     login = async (req, res, next) => {
         try {
             let data = req.body;
@@ -75,6 +79,32 @@ class AuthController {
         }
 
     }
+    changePassword = async (req, res, next) => {
+        try {
+            console.log("in the controller");
+            let user_id = req.auth_user._id;
+            let data = req.body;
+            console.log("in the controller",data);
+            let loggedInUser = await user_services.getUserById(user_id);
+            if (loggedInUser) {
+                if (bcrypt.compareSync(data.oldPassword, loggedInUser.password)) {
+                    data.password = bcrypt.hashSync(data.newPassword, 10);
+                    await user_services.updatePassword(user_id, data);
+                    res.json({
+                        result: null,
+                        status: true,
+                        msg: "Password Changed successfully"
+                    })
+                } else {
+                    next({ status: 400, msg: { password: "Old Password does not match" } });
+                }
+            } else {
+                next({ status: 404, msg: "user Not found" });
+            }
+        } catch (e) {
+            next({ status: 400, msg: e });
+        }
+    }
     updateUser = async (req, res, next) => {
         try {
             let user_id = req.auth_user._id;
@@ -87,6 +117,21 @@ class AuthController {
             })
         } catch (e) {
             next({ status: 400, msg: e });
+        }
+    }
+    updateUserById = async (req, res, next) => {
+        try {
+            let user_id = req.params.id;
+            let data = req.body;
+            console.log(user_id);
+            let user_obj = await user_services.updateUser(user_id, data);
+            res.json({
+                result: user_obj,
+                status: true,
+                msg:"User Updated Successfully"
+            })
+        } catch (e) {
+            next({status: 400, msg:e})
         }
     }
     deleteUser = async (req, res, next) => {
@@ -102,16 +147,35 @@ class AuthController {
             next({ status: 400, msg: e });
         }
     }
-    getAllUsers = async (req, res, next) => {
+    deleteUserById = async (req, res, next) => {
         try {
-            let users = await user_services.getAllUsers();
+            let user_id = req.params.id;
+            console.log(user_id);
+            await user_services.deleteUser(user_id);
             res.json({
-                result: users,
+                result: user_id,
                 status: true,
-                msg: "All Users"
+                msg:"User deleted Successfully"
             })
         } catch (e) {
             next({ status: 400, msg: e });
+        }
+    }
+    getAllUsers = async (req, res, next) => {
+        try {
+            let users = await user_services.getAllUsers();
+            const usersWithBooks = await Promise.all(users.map(async (user) => {
+                const borrowedBook = await user_book_service.getUserBookByUserId(user._id);
+                return { ...user.toObject(), borrowed_book: borrowedBook };
+            }));
+
+            res.json({
+                result: usersWithBooks,
+                status: true,
+                msg: "All Users with Borrowed Books"
+            });
+        } catch (e) {
+            next({ status: 400, msg: e.message });
         }
     }
     getById = async (req, res, next) => {
@@ -127,7 +191,6 @@ class AuthController {
             next({ status: 404, msg: "User Not Found" });
         }
     }
-
 }
 
 module.exports = AuthController;

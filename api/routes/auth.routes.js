@@ -15,7 +15,11 @@ auth_routes.get("/profile", auth, auth_controller.getLoggedInUser);
 
 auth_routes.put("/profile/edit", auth, auth_controller.updateUser);
 
+auth_routes.put("/change-password",uploader.none(), auth, auth_controller.changePassword);
+
 auth_routes.delete("/profile", auth, auth_controller.deleteUser);
+
+auth_routes.delete("/user/:id", auth, role.isAdmin, auth_controller.deleteUserById);
 
 auth_routes.get("/logout", auth, auth_controller.logout);
 

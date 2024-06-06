@@ -23,9 +23,9 @@ const UserSchemaDef = new mongoose.Schema({
         enum: ['admin', 'librarian', 'user'],
         default: "user"
     },
-    preferredGenres: [{
+    preferredGenres: {
         type: String
-    }],
+    },
 
     image: String,
 

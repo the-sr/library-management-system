@@ -8,20 +8,16 @@ class BookServices {
             const schema = joi.object({
                 isbn: joi.string().required(),
                 title: joi.string().required(),
-                author: joi.alternatives().try(
-                    joi.string(),
-                    joi.array().items(joi.string())
-                ),
+                author: joi.string(), 
                 edition: joi.string(),
                 publisher: joi.string(),
-                genre: joi.alternatives().try(
-                    joi.string(),
-                    joi.array().items(joi.string())
-                ),
+                genre: joi.string().required(),
                 image: joi.string(),
-                bookCount: joi.number().required()
+                bookCount: joi.number().required().min(1)
             });
+            
             let result = schema.validate(data);
+            console.log("Inside :",result);
             if (result.error) {
                 throw result.error.details[0].message;
             }
@@ -73,14 +69,30 @@ class BookServices {
     }
 
     deleteBookById = async (id) => {
-        return await BookModel.deleteOne(id);
+        try {
+            await BookModel.deleteOne({ _id: id });
+        } catch (e) {
+            throw e;
+        }
     }
 
     updateBook = async (id, data) => {
-        let status = await BookModel.findByIdAndUpdate(id, {
-            $set: data
-        })
-        return status;
+        try {
+            let status = await BookModel.findByIdAndUpdate(id, {
+                $set: {
+                    title: data.title,
+                    author: data.author,
+                    edition: data.edition,
+                    publisher: data.publisher,
+                    genre: data.genre,
+                    image:data.image,
+                    bookCount:data.bookCount
+                }
+            })
+            return status;
+        } catch (e) {
+            throw e;
+        }  
     }
 
     searchBooksByName = async (name) => {

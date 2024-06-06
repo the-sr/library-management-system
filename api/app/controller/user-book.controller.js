@@ -7,11 +7,11 @@ const user_book_service = new UserBookService();
 class UserBookController {
 
     borrowBook = async (req, res, next) => {
-        let data = req.body;
+        let book_id = req.params.id;
         let user_id = req.auth_user._id;
+        console.log(book_id, user_id);
         try {
-            let book = await book_service.getBookByTitle(data);
-
+            let book = await book_service.getBookById(book_id);
             if (book.bookCount < 1) {
                 return next({ status: 400, msg: "No copies of the book available" });
             }
@@ -20,7 +20,6 @@ class UserBookController {
                     user: user_id,
                     book: book._id,
                 };
-
                 let response = await user_book_service.addUserBook(user_book);
                 book.bookCount = book.bookCount - 1;
                 await book_service.updateBook(book._id, book);
@@ -38,13 +37,15 @@ class UserBookController {
     }
 
     returnBook = async (req, res, next) => {
-        let user_id = req.auth_user._id;
-        let book_id = req.body.book_id;
         try {
-            let user_book = await user_book_service.removeUserBook({ user: user_id, book: book_id });
-            if (user_book.deletedCount > 0) {
+            
+            let user_id = req.auth_user._id;
+            let user_book_id = req.params.id;
+            let user_book = await user_book_service.removeUserBook(user_book_id);
+            if (user_book) {
+                let book_id = user_book.book._id;
                 let book = await book_service.getBookById(book_id);
-                book.bookCount = book.bookCount + 1;
+                book.bookCount += 1;
                 await book_service.updateBook(book_id, book);
                 res.json({
                     result: user_book,
@@ -59,9 +60,24 @@ class UserBookController {
         }
     }
 
-    getUserBookByUserId = async (req, res, next) => {
+    getUserBook = async (req, res, next) => {
         try {
             let user_id = req.auth_user._id;
+            let user_books = await user_book_service.getUserBookByUserId(user_id);
+            res.json({
+                result: user_books,
+                status: true,
+                msg: "User Books Fetched Successfully"
+            });
+        } catch (e) {
+            next({ status: 400, msg: e.message });
+        }
+    }
+    
+    getUserBookByUserId = async (req, res, next) => {
+        try {
+            let user_id = req.params.id;
+            console.log(user_id);
             let user_books = await user_book_service.getUserBookByUserId(user_id);
             res.json({
                 result: user_books,

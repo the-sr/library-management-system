@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -6,21 +7,19 @@ import { toast } from "react-toastify";
 
 const LoginPage = () => {
     let [data, setData] = useState({
-        email: null,
-        password: null
+        email: "",
+        password: ""
     });
 
-    let [errData, setErrData] = useState({
-        email: null,
-        pasword: null
-    })
     let navigate = useNavigate();
+
     const handleChange = (e) => {
         setData({
             ...data,
             [e.target.name]: e.target.value
         })
     }
+
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
@@ -30,24 +29,23 @@ const LoginPage = () => {
         } catch (e) {
             if (e?.response?.status === 400) {
                 if (e?.response?.data?.msg) {
-                    setErrData({
-                        ...e.response.data.msg
-                    })
+                    toast.error("Invalid email or password");
                 }
             } else {
                 toast.warning(e.response.data.msg);
             }
         }
     }
+
     useEffect(() => {
         let token = localStorage.getItem("library_system_token");
-        let user = JSON.parse(localStorage.getItem("library_system"))
+        let user = JSON.parse(localStorage.getItem("library_system"));
         if (token) {
-            navigate("/" + user.role)
+            navigate("/" + user.role);
         }
-    }, [navigate])
+    }, [navigate]);
 
-    return (<>
+    return (
         <div>
             <Container>
                 <Row>
@@ -62,14 +60,24 @@ const LoginPage = () => {
 
                             <Form.Group className="mb-3" controlId="formGroupEmail">
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control onChange={handleChange} name="email" type="email" placeholder="Enter email" />
-                                <span className="text-danger">{errData?.email}</span>
+                                <Form.Control
+                                    onChange={handleChange}
+                                    name="email"
+                                    type="email"
+                                    placeholder="Enter email"
+                                    value={data.email}
+                                />
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formGroupPassword">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control onChange={handleChange} name="password" type="password" placeholder="Password" />
-                                <span className="text-danger">{errData?.password}</span>
+                                <Form.Control
+                                    onChange={handleChange}
+                                    name="password"
+                                    type="password"
+                                    placeholder="Password"
+                                    value={data.password}
+                                />
                             </Form.Group>
 
                             <Button variant="danger me-3" type="reset">
@@ -83,10 +91,8 @@ const LoginPage = () => {
                     </Col>
                 </Row>
             </Container>
-
         </div>
-
-    </>)
+    )
 }
 
 export default LoginPage;

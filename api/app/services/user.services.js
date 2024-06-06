@@ -1,25 +1,23 @@
 const joi = require("joi");
 const UserModel = require("../model/user.model");
 
+
 class UserServices {
 
     validateData = (data) => {
         try {
-
             const schema = joi.object({
                 name: joi.string().required(),
                 email: joi.string().email().required(),
                 password: joi.string().min(8).max(15).required(),
                 phone: joi.string().min(10),
                 role: joi.string().valid('admin', 'librarian', 'user').default('user'),
-                preferredGenres: joi.alternatives().try(
-                    joi.string(),
-                    joi.array().items(joi.string())
-                ),
+                preferredGenres: joi.string().allow(null,''),
                 image: joi.string().allow(null, '')
             });
             const { error, value } = schema.validate(data);
             if (error) {
+                console.log(error.details)
                 throw new Error(error.details[0].message)
             }
         } catch (e) {
@@ -59,6 +57,15 @@ class UserServices {
             throw e;
         }
     }
+    updatePassword = async (id, data) => {
+        try {
+            let user = await UserModel.findByIdAndUpdate(id, {
+                $set: {password:data.password}
+            });
+        } catch (e) {
+            throw e;
+        }
+    }
     updateUser = async (id, data) => {
         try {
             let user = await UserModel.findByIdAndUpdate(id, {
@@ -70,7 +77,7 @@ class UserServices {
     }
     deleteUser = async (id) => {
         try {
-            return await UserModel.deleteOne(id);
+            await UserModel.deleteOne({ _id: id });
         } catch (e) {
             throw e;
         }

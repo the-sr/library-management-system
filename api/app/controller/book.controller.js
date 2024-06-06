@@ -9,6 +9,7 @@ class BookController {
             if (req.file) {
                 data.image = req.file.filename;
             }
+            console.log(data);
             book_services.validateData(data);
             await book_services.addBook(data);
             res.json({
@@ -17,7 +18,7 @@ class BookController {
                 msg: "Book Added Successfully"
             });
         } catch (e) {
-            next({ status: 400, msg: e });
+            next({ status: 400, msg: e.message });
         }
     }
     getAllBooks = async (req, res, next) => {
@@ -53,8 +54,7 @@ class BookController {
             if (req.file) {
                 data.image = req.file.filename;
             }
-            book_services.validateData(data);
-            let response = await book_services.updateBook(req.param.id, data);
+            let response = await book_services.updateBook(req.params.id, data);
             res.json({
                 result: response,
                 status: true,
@@ -67,20 +67,21 @@ class BookController {
 
     deleteBook = async (req, res, next) => {
         try {
-            let data = await book_services.deleteBookById(req.param.id);
+            let bookId = req.params.id;
+            let data = await book_services.deleteBookById(bookId);
             if (data.deletedCount) {
+                console.log("Deleted");
                 res.json({
                     result: data,
                     status: true,
                     msg: "Book deleted successfully"
                 });
             } else {
-                next({ status: 404, msg: "Book does not exists" });
+                next({ status: 404, msg: "Book does not exist" });
             }
         } catch (e) {
             next({ status: 400, msg: e });
         }
-
     }
 
     searchBook = async (req, res, next) => {

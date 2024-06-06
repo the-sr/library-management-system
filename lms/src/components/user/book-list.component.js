@@ -93,7 +93,7 @@ const BookList = () => {
                                 <img src={book.image ? `path/to/images/${book.image}` : "default-image-path"} alt="Book" className="book-photo" />
                                 <div className="book-details">
                                     <p><strong style={{ color: 'green' }}>Title:</strong> {book.title}</p>
-                                    <p><strong style={{ color: 'green' }}>Authors:</strong> {book.authors}</p>
+                                    <p><strong style={{ color: 'green' }}>Authors:</strong> {book.author}</p>
                                     <p><strong style={{ color: 'green' }}>Edition:</strong> {book.edition}</p>
                                     <p><strong style={{ color: 'green' }}>Publisher:</strong> {book.publisher}</p>
                                     <p><strong style={{ color: 'green' }}>Genre:</strong> {book.genre}</p>

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const commonSchema = require("./common.schema");
-const UserBookSchemaDef = new mongoose.Schema({
 
+const UserBookSchemaDef = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -14,18 +14,22 @@ const UserBookSchemaDef = new mongoose.Schema({
 
     borrowedDate: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     },
 
     returnDate: {
-        type: Date,
-        default: () => {
-            const returnDate = new date(this.borrowedDate);
-            returnDate.setMonth(returnDate.getMonth() + 6);
-            return returnDate;
-        }
+        type: Date
     }
 
 }, commonSchema.trigger);
+
+UserBookSchemaDef.pre('save', function (next) {
+    if (!this.returnDate) {
+        this.returnDate = new Date(this.borrowedDate);
+        this.returnDate.setMonth(this.returnDate.getMonth() + 6);
+    }
+    next();
+});
+
 const UserBookModel = mongoose.model("UserBook", UserBookSchemaDef);
 module.exports = UserBookModel;

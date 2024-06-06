@@ -11,9 +11,9 @@ class UserBookService {
         }
     }
 
-    removeUserBook = async (data) => {
+    removeUserBook = async (user_book_id) => {
         try {
-            return await UserBookModel.deleteOne(data);
+            return await UserBookModel.findByIdAndDelete(user_book_id).populate('book');
         } catch (e) {
             throw e;
         }

@@ -1,4 +1,16 @@
-.registration-container {
+.page {
+    background: linear-gradient(to right, #01012e, #02befd);
+    min-height: 100vh;
+    display: flex;
+    align-items: top;
+    justify-content: center;
+  }
+
+  .lable-color{
+    color: white;
+  }
+
+/* .registration-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,4 +99,4 @@
 .btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
-}
+} */

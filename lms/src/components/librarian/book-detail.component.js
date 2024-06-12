@@ -1,4 +1,3 @@
-
 // import { useState } from "react";
 // import { book_service } from "../../services/book-service";
 // import "./book-detail.css";
@@ -149,34 +148,92 @@ const BookDetails = ({ book, onBackClick, onDeleteBook }) => {
 
   return (
     <div className="book-details-container">
-      <button onClick={onBackClick} className="back-button">Back</button>
+      <button onClick={onBackClick} className="back-button">
+        Back
+      </button>
       <div className="book-details-card">
-        <img
+        {/* <img
           src={book.image ? `path/to/images/${book.image}` : "default-image-path"}
           alt="Book"
           className="book-details-photo"
+        /> */}
+        <img
+          src={process.env.PUBLIC_URL + "/book.png"}
+          alt="User"
+          className="profile-photo"
         />
         <div className="book-details-info">
           {isEditing ? (
             <>
-              <input type="text" name="title" value={editedBook.title} onChange={handleChange} />
-              <input type="text" name="author" value={editedBook.author} onChange={handleChange} />
-              <input type="text" name="edition" value={editedBook.edition} onChange={handleChange} />
-              <input type="text" name="publisher" value={editedBook.publisher} onChange={handleChange} />
-              <input type="text" name="genre" value={editedBook.genre} onChange={handleChange} />
-              <input type="number" name="bookCount" value={editedBook.bookCount} onChange={handleChange} />
-              <button onClick={handleEdit} className="save-button">Save</button>
+              <input
+                type="text"
+                name="title"
+                value={editedBook.title}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                name="author"
+                value={editedBook.author}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                name="edition"
+                value={editedBook.edition}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                name="publisher"
+                value={editedBook.publisher}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                name="genre"
+                value={editedBook.genre}
+                onChange={handleChange}
+              />
+              <input
+                type="number"
+                name="bookCount"
+                value={editedBook.bookCount}
+                onChange={handleChange}
+              />
+              <button onClick={handleEdit} className="save-button">
+                Save
+              </button>
             </>
           ) : (
             <>
-              <p><strong style={{ color: "green" }}>Title:</strong> {book.title}</p>
-              <p><strong style={{ color: "green" }}>Authors:</strong> {book.author}</p>
-              <p><strong style={{ color: "green" }}>Edition:</strong> {book.edition}</p>
-              <p><strong style={{ color: "green" }}>Publisher:</strong> {book.publisher}</p>
-              <p><strong style={{ color: "green" }}>Genre:</strong> {book.genre}</p>
-              <p><strong style={{ color: "green" }}>Book Count:</strong> {book.bookCount}</p>
+              <p>
+                <strong style={{ color: "green" }}>Title:</strong> {book.title}
+              </p>
+              <p>
+                <strong style={{ color: "green" }}>Authors:</strong>{" "}
+                {book.author}
+              </p>
+              <p>
+                <strong style={{ color: "green" }}>Edition:</strong>{" "}
+                {book.edition}
+              </p>
+              <p>
+                <strong style={{ color: "green" }}>Publisher:</strong>{" "}
+                {book.publisher}
+              </p>
+              <p>
+                <strong style={{ color: "green" }}>Genre:</strong> {book.genre}
+              </p>
+              <p>
+                <strong style={{ color: "green" }}>Book Count:</strong>{" "}
+                {book.bookCount}
+              </p>
               <div className="book-actions">
-                <button onClick={() => setIsEditing(true)} className="edit-button me-2">
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="edit-button me-2"
+                >
                   <i className="fa-solid fa-pen-to-square" /> Edit Details
                 </button>
                 <button onClick={handleDeleteBook} className="delete-button">

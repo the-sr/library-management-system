@@ -1,0 +1,46 @@
+.contact-page {
+    background: linear-gradient(to right, #01012e, #02befd);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card {
+    border-radius: 10px;
+    background-color: #fff;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  h1 {
+    color: #343a40;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+  }
+  
+  h5 {
+    color: #6c757d;
+  }
+  
+  p {
+    color: #495057;
+    line-height: 1.6;
+  }
+  
+  hr {
+    border-top: 1px solid #dee2e6;
+  }
+  
+  a {
+    color: #007bff;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  

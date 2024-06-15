@@ -45,6 +45,16 @@ class UserBookService extends HttpService {
         }
     }
 
+    getAllUserBook = async () => {
+        try {
+            let response = await this.getRequest(`/all-user-books-dashboard`, {
+                login: true
+            });
+            return response.result;
+        } catch (e) {
+            throw e;
+        }
+    }
 }
 
 export const user_book_service = new UserBookService();

@@ -41,5 +41,13 @@ class UserBookService {
       throw e;
     }
   };
+  getAllUserBooksDashboard = async () => {
+    try {
+      let userBooks = await UserBookModel.find();
+      return userBooks;
+    } catch (e) {
+      throw e;
+    }
+  };
 }
 module.exports = UserBookService;

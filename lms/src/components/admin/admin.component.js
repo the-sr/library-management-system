@@ -5,6 +5,7 @@ import UserProfile from "../common/user-profile.component";
 import AddLibrarian from "./add-librarian.component";
 import Settings from "../common/user-setting.component";
 import UserList from "./user-list.component";
+import Dashboard from "./dashboard.component";
 
 export const Sidebar = () => {
   const [activeMenu, setActiveMenu] = useState("Profile");
@@ -17,12 +18,12 @@ export const Sidebar = () => {
             <UserProfile />
           </div>
         );
-      //   case "Dashboard":
-      //     return (
-      //       <div className="content-animate">
-      //         <Dashboard />
-      //       </div>
-      //     );
+        case "Dashboard":
+          return (
+            <div className="content-animate">
+              <Dashboard/>
+            </div>
+          );
       case "Users":
         return (
           <div className="content-animate">
@@ -61,13 +62,13 @@ export const Sidebar = () => {
             <i className="fa-regular fa-user me-2" />
             Profile
           </li>
-          {/* <li
+          <li
             className={activeMenu === "Dashboard" ? "active" : ""}
             onClick={() => setActiveMenu("Dashboard")}
           >
             <i className="fa-solid fa-gauge me-2" />
             Dashboard
-          </li> */}
+          </li>
           <li
             className={activeMenu === "Users" ? "active" : ""}
             onClick={() => setActiveMenu("Users")}

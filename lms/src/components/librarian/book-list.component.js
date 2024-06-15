@@ -84,7 +84,6 @@ const BookList = () => {
               <option value="title">Sort by Title</option>
               <option value="edition">Sort by Edition</option>
               <option value="bookCount">Sort by Book Count</option>
-              <option value="genre">Sort by Genre</option>
             </select>
           </div>
           <div className="book-list">

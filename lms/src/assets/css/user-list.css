@@ -75,7 +75,7 @@
 }
 
 .user-details strong {
-    color: #28a745; /* Green color for the titles */
+    color: #28a745; 
 }
 
 .loading, .error {

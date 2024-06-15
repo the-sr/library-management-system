@@ -9,7 +9,7 @@ const uploader = require("../app/middleware/uploader.middleware");
 
 books_routes.post("/add-book", auth, role.isLibrarian, uploader.single('image'), book_controller.addBook);
 
-books_routes.get("/books", auth, role.isLibrarianUser, book_controller.getAllBooks);
+books_routes.get("/books", auth, role.isAdminLibrarianUser, book_controller.getAllBooks);
 
 books_routes.get("/book/:id", auth, book_controller.getBook);
 

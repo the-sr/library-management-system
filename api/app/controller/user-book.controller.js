@@ -57,10 +57,25 @@ class UserBookController {
     }
   };
 
+  getAllUserBookDashboard=async(req,res,next)=>{
+    try{
+      let all_user_books=await user_book_service.getAllUserBooksDashboard();
+      console.log("All user Books",all_user_books);
+      res.json({
+        result: all_user_books,
+        status: true,
+        msg: "All User Books Fetched Successfully",
+      })
+    }catch (e) {
+      next({ status: 400, msg: e.message });
+    }
+  }
+
   getUserBook = async (req, res, next) => {
     try {
       let user_id = req.auth_user._id;
       let user_books = await user_book_service.getUserBookByUserId(user_id);
+      console.log("user Books",user_books);
       res.json({
         result: user_books,
         status: true,

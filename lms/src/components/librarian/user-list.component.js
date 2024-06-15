@@ -84,8 +84,6 @@ const UserList = () => {
             />
             <select onChange={handleSort} className="sort-select">
               <option value="name">Sort by Name</option>
-              <option value="email">Sort by Email</option>
-              <option value="phone">Sort by Phone</option>
               <option value="role">Sort by Role</option>
             </select>
           </div>

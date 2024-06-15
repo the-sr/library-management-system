@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { auth_service } from "../../../services/auth.service";
@@ -6,7 +6,12 @@ import { toast } from "react-toastify";
 import "../../../assets/css/auth.page.css";
 
 const LoginPage = () => {
-  let [data, setData] = useState({
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({
     email: "",
     password: "",
   });
@@ -18,11 +23,34 @@ const LoginPage = () => {
       ...data,
       [e.target.name]: e.target.value,
     });
+    // Clear error message when user starts typing
+    setErrors({
+      ...errors,
+      [e.target.name]: "",
+    });
   };
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+
+      // Validate form fields
+      if (!data.email.trim()) {
+        setErrors({
+          ...errors,
+          email: "Email is required",
+        });
+        return;
+      }
+      if (!data.password.trim()) {
+        setErrors({
+          ...errors,
+          password: "Password is required",
+        });
+        return;
+      }
+
+      // If form fields are valid, proceed with login
       let user = await auth_service.login(data);
       toast.success("Welcome");
       navigate("/" + user.role);
@@ -57,10 +85,7 @@ const LoginPage = () => {
         <Row>
           <Col>
             <Form onSubmit={handleSubmit}>
-              <Form.Group
-                className="mb-3 lable-color"
-                controlId="formGroupEmail"
-              >
+              <Form.Group className="mb-3 lable-color" controlId="formGroupEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
                   onChange={handleChange}
@@ -69,12 +94,10 @@ const LoginPage = () => {
                   placeholder="Enter email"
                   value={data.email}
                 />
+                {errors.email && <Form.Text className="text-danger">{errors.email}</Form.Text>}
               </Form.Group>
 
-              <Form.Group
-                className="mb-3 lable-color"
-                controlId="formGroupPassword"
-              >
+              <Form.Group className="mb-3 lable-color" controlId="formGroupPassword">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   onChange={handleChange}
@@ -83,6 +106,7 @@ const LoginPage = () => {
                   placeholder="Password"
                   value={data.password}
                 />
+                {errors.password && <Form.Text className="text-danger">{errors.password}</Form.Text>}
               </Form.Group>
 
               <Button variant="danger me-3" type="reset">

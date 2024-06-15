@@ -52,7 +52,6 @@
 
 .content {
     margin-left: 200px;
-    /* Adjust to the width of the sidebar */
     padding: 20px;
     flex-grow: 1;
     transition: opacity 0.5s ease-in-out;
